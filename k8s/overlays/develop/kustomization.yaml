@@ -1,4 +1,3 @@
-
 patchesStrategicMerge:
 - image-patch.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
@@ -7,4 +6,4 @@ resources:
 - ../../base
 images:
 - name: registry.codenoob.dev/cvfuhr/inference
-  newTag: f4aeffe768cee5bbba8bbcfc4be7e3afd888488a
+  newTag: 6599a266a75bbc1fc34ab347dc6603aca90ac762
