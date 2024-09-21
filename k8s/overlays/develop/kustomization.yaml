@@ -6,4 +6,4 @@ resources:
 - ../../base
 images:
 - name: registry.codenoob.dev/cvfuhr/inference
-  newTag: 6599a266a75bbc1fc34ab347dc6603aca90ac762
+  newTag: 2fca86ed5d02ca268df8f8704818be9634e2bcb3
