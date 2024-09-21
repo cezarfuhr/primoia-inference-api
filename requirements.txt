@@ -1,4 +1,6 @@
 Flask==3.0.3
-torch==1.9.0
-transformers==4.9.2
-nltk==3.6.2
+torch==2.3.1
+torchaudio==2.3.1
+torchvision==0.18.1
+transformers==4.42.4
+nltk==3.8.1

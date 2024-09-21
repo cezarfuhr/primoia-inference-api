@@ -4,6 +4,8 @@ from transformers import BertTokenizer, BertForSequenceClassification
 import re
 import nltk
 
+nltk.download('stopwords', quiet=True)
+nltk.download('punkt', quiet=True)
 
 app = Flask(__name__)
 
@@ -22,16 +24,12 @@ category_model.eval()  # Colocar o modelo de categoria em modo de avaliação
 # Dicionário para armazenar modelos de intenção por categoria
 intent_models = {}
 
-
 def preprocess(text):
     text = text.lower()
     text = re.sub(r'[^\w\s]', '', text)
-    nltk.download('stopwords', quiet=True)
-    nltk.download('punkt', quiet=True)
     words = nltk.word_tokenize(text)
     words = [word for word in words if word not in nltk.corpus.stopwords.words('portuguese')]
     return " ".join(words)
-
 
 @app.route('/predict', methods=['POST'])
 def predict():
