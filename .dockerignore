@@ -1,0 +1,5 @@
+modelos_treinados/
+tests/
+.git/
+.gitignore
+README.md

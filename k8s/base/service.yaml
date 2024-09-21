@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: inference-flask-api
+spec:
+  selector:
+    app: inference-flask-api
+  ports:
+    - name: api
+      protocol: TCP
+      port: 8009         # Porta externa
+      targetPort: 8009    # Porta interna

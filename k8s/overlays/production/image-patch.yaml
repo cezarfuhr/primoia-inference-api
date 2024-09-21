@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vosk-flask-api
+spec:
+  template:
+    spec:
+      containers:
+        - name: vosk-flask-api
+          image: registry.codenoob.dev/cvfuhr/inference:latest

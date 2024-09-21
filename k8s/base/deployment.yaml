@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inference-flask-api
+  labels:
+    app: inference-flask-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inference-flask-api
+  template:
+    metadata:
+      labels:
+        app: inference-flask-api
+    spec:
+      containers:
+        - name: inference-flask-api
+          image: registry.codenoob.dev/cvfuhr/inference:latest
+          ports:
+            - containerPort: 8009

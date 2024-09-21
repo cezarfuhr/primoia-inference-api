@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - develop
+    paths-ignore:
+      - 'k8s/overlays/develop/kustomization.yaml'
+
+env:
+  IMAGE_NAME: "cvfuhr/inference"
+  REGISTRY_URL: ${{ secrets.REGISTRY_URL }}
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    name: Docker build and push
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Log in to Docker Registry
+        run: echo "${{ env.DOCKER_PASSWORD }}" | docker login -u "${{ env.DOCKER_USERNAME }}" --password-stdin ${{ env.REGISTRY_URL }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }} .    
+
+      - name: Push Docker image to registry
+        run: |
+          docker push ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Update image tag in kustomization.yaml
+        run: |
+          cd k8s/overlays/develop
+          kustomize edit set image ${{ env.REGISTRY_URL }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "[skip ci] Update image to ${{ github.sha }}"
+          branch: develop
+          file_pattern: k8s/overlays/develop/kustomization.yaml

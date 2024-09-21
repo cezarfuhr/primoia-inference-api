@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inference-flask-api
+spec:
+  template:
+    spec:
+      containers:
+        - name: inference-flask-api
+          image: registry.codenoob.dev/cvfuhr/inference:latest
+          resources:
+            limits:
+              memory: "14Gi"
+            requests:
+              memory: "14Gi"
