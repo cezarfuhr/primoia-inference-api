@@ -4,6 +4,7 @@ from transformers import BertTokenizer, BertForSequenceClassification
 import re
 import nltk
 
+
 app = Flask(__name__)
 
 # Mapeamento de índice para nome da categoria
